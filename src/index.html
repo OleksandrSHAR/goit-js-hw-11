@@ -8,18 +8,22 @@
   </head>
   <body>
     <form class="search-form" id="search-form">
-      <button type="submit">Search</button>
-
-      <div>
+      <div class="form-wrap">
         <input
+          class="imput-get"
           type="text"
           name="searchQuery"
           autocomplete="off"
           placeholder="Search images..."
         />
-        <div class="gallery css-gellery"></div>
+        <button class="butoon-search" type="submit">Search</button>
       </div>
     </form>
+    <div>
+      <div>
+        <div class="gallery css-gellery"></div>
+      </div>
+    </div>
     <div class="js-guard"></div>
     <div class="wrap-end">
       <button type="submit" class="loadd-more-js">Loading</button>

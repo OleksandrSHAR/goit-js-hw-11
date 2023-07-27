@@ -1,3 +1,7 @@
+body {
+  background-color: yellow;
+}
+
 .wrap-end {
   visibility: hidden;
 }
@@ -5,4 +9,26 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+.search-form {
+  background-color: blue;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.form-wrap {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.imput-get {
+  border-radius: 5px;
+}
+.butoon-search {
+  border-radius: 5px;
+}
+.gelery-linc {
+  background-color: aliceblue;
+  border-radius: 5px;
 }

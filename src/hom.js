@@ -7,7 +7,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 const buttonLoad = document.querySelector(".loadd-more-js")
 const seaForm = document.querySelector("#search-form")
 const geleryImg = document.querySelector(".gallery")
-const simplelightbox = new SimpleLightbox('.gallery a')
+const lightbox = new SimpleLightbox('.gallery a')
 const elJs=document.querySelector(".js-guard")
 let page = 1;
 let searVal;
@@ -39,7 +39,7 @@ async function onSearch(e) {
      
       Notiflix.Report.success('Hooray' ,'We found images', 'OK')
       geleryImg.innerHTML = geleryMarc(hits)
-      simplelightbox.refresh();
+      lightbox.refresh();
       e.target.reset()
        observer.observe(elJs);
     
@@ -85,7 +85,7 @@ let observer = new IntersectionObserver(paginationHand, options);
     if(hits.length < 40){
       observer.unobserve(entry.target)
     }
-    simpleLightbox.refresh();
+    lightbox.refresh();
     
     if(page > Math.round((hitsTot / 40))) {
       setTimeout(() => {
