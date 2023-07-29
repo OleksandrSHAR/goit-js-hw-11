@@ -13,7 +13,6 @@ let page = 1;
 let searVal;
 
 
-buttonLoad.addEventListener("click",scrol)
 seaForm.addEventListener("submit", onSearch)
 
 async function onSearch(e) {
@@ -31,13 +30,13 @@ async function onSearch(e) {
       Notiflix.Loading.remove();
       return
     } else {
-      const { hits, hitsTot } = await searchImg(searVal)
-      if (hitsTot === 0) {
+      const { hits, totalHits } = await searchImg(searVal, page)
+      if (totalHits === 0) {
         Notiflix.Report.warning('Not found', 'Your request was not found, please check the correctness of what you wrote and try again', 'cllose');
       }
       
      
-      Notiflix.Report.success('Hooray' ,'We found images', 'OK')
+      Notiflix.Report.success('Hooray' ,`Hooray! We found ${totalHits} images.`, 'OK')
       geleryImg.innerHTML = geleryMarc(hits)
       lightbox.refresh();
       e.target.reset()
@@ -50,18 +49,12 @@ async function onSearch(e) {
       console.log(error)
     }
   finally {
-    seaForm.reset()
+   // seaForm.reset()
    Notiflix.Loading.remove();}
   }
 
 
-function scrol(){
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  })
-  buttonLoad.style.visibility = "hidden";
-}
+
 
 
   let options = {
@@ -73,35 +66,38 @@ function scrol(){
 let observer = new IntersectionObserver(paginationHand, options);
 
 
+  
  async function paginationHand(entries, observer) {
   for (let entry of entries) {
    if(entry.isIntersecting){
-  try {
-    Notiflix.Loading.arrows();
-    page +=1;
-    console.log(page);
-    const {hits, hitsTot} = await searchImg(searVal, page)
-    geleryImg.insertAdjacentHTML('beforeend', geleryMarc(hits))
-    if(hits.length < 40){
-      observer.unobserve(entry.target)
-    }
-    lightbox.refresh();
+     try {
+       Notiflix.Loading.arrows();
+       page += 1;
+       console.log(page);
+       const { hits, totalHits } = await searchImg(searVal, page)
+       geleryImg.insertAdjacentHTML('beforeend', geleryMarc(hits))
+       
+         //observer.unobserve(entry.target)
+      
+       lightbox.refresh();
     
-    if(page > Math.round((hitsTot / 40))) {
-      setTimeout(() => {
-        buttonLoad.style.visibility = "visible";
-      Notiflix.Report.failure('END', 'Nothing else found', 'OK');
-      return;
-      }, 1000);
-  }
-    } catch(err) {
-      console.log(err);
-      buttonLoad.style.visibility = "visible";
-      Notiflix.Report.failure('UPS', 'It seems that a malfunction has occurred', 'Closse');
-      }
-      finally {
-      Notiflix.Loading.remove();
-    }
+       if (page > Math.round((totalHits / 40))) {
+         setTimeout(() => {
+           observer.unobserve(entry.target)
+               buttonLoad.style.visibility = "visible";
+           Notiflix.Report.failure('END', "We're sorry, but you've reached the end of search results.", 'OK');
+           return;
+         }, 1000);
+         
+       }
+     } catch (err) {
+       console.log(err);
+       buttonLoad.style.visibility = "visible";
+       Notiflix.Report.failure('UPS', 'It seems that a malfunction has occurred', 'Closse');
+     }
+     finally {
+       Notiflix.Loading.remove();
+     } 
   }
  };
 }
