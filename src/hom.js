@@ -84,7 +84,7 @@ let observer = new IntersectionObserver(paginationHand, options);
        if (page > Math.round((totalHits / 40))) {
          setTimeout(() => {
            observer.unobserve(entry.target)
-               buttonLoad.style.visibility = "visible";
+               buttonLoad.style.visibility = "hidden";
            Notiflix.Report.failure('END', "We're sorry, but you've reached the end of search results.", 'OK');
            return;
          }, 1000);
